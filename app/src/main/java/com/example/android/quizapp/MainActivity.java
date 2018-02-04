@@ -26,22 +26,25 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
+    // override the behaviour of back button to get to the first screen of the app
     @Override
     public void onBackPressed() {
         startActivity(new Intent(this, MainActivity.class));
     }
 
+    // method for setting the layout for the quiz when the "Start quiz" button is pressed
     public void beginQuiz(View view) {
         setContentView(R.layout.quiz_layout);
     }
 
+    // method for checking a question with a single possible answer
     private void radioGroupAnswerCheck(@IdRes int idRadioGroup, @IdRes int idCorrectRadioButton, @StringRes int idCorrectAnswerText) {
-        //  checking answer for question 2
+        //checking answer for question 2
         RadioGroup rg = findViewById(idRadioGroup);
         RadioButton rb = findViewById(idCorrectRadioButton);
-        //set green to correct answer
+        //set text color to green for the correct answer
         rb.setTextColor(getResources().getColor(R.color.green));
-        //check if answer selected and if it correct
+        //check if answer selected, if it is correct add point to total, else set text color to red
         int selectedRadioButtonID = rg.getCheckedRadioButtonId();
         if (selectedRadioButtonID != -1) {
             RadioButton selectedRadioButton = findViewById(selectedRadioButtonID);
@@ -54,13 +57,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // method for checking a question with free to type text answer
     private void textAnswerCheck(@IdRes int idCorrectAnswerHeader, @IdRes int idCorrectAnswerView, @IdRes int idAnswer, @StringRes int correctAnswerString) {
-        // setting answer to be visible
+        // setting correct answer TextView to be visible
         final TextView correctAnswerHeader = findViewById(idCorrectAnswerHeader);
         final TextView correctAnswerView = findViewById(idCorrectAnswerView);
         correctAnswerHeader.setVisibility(View.VISIBLE);
         correctAnswerView.setVisibility(View.VISIBLE);
-        // checking if user introduced the correct answer
+        // checking if user introduced the correct answer then set text color to green, else to red
         final EditText answerView = findViewById(idAnswer);
         final String answer1_string = answerView.getText().toString();
         if (answer1_string.equalsIgnoreCase(getString(correctAnswerString))) {
@@ -73,14 +77,20 @@ public class MainActivity extends AppCompatActivity {
     private void displayToastResult() {
         // display Toast message with number of correct answers
         String toastMessage = getString(R.string.toast_message, answer_count);
+        // if less than 6 correct answers the test was not passwd
         if (answer_count < 6) {
+            // if multiple correct answers then use plural
             if (answer_count != 1)
                 toastMessage += " " + getString(R.string.multiple_answers) + " !";
+                // else use singular
             else
                 toastMessage += " " + getString(R.string.single_answer) + " !";
             toastMessage += "\n" + getString(R.string.not_passed);
-        } else
+        }
+        // if 6 or more correct answers then test was passed
+        else
             toastMessage += " " + getString(R.string.multiple_answers) + " !\n" + getString(R.string.congrats);
+        // display Toast message
         Toast.makeText(this, toastMessage, Toast.LENGTH_LONG).show();
     }
 
@@ -95,35 +105,43 @@ public class MainActivity extends AppCompatActivity {
 
         //check if answer for Q4 is correct (multiple choices possible)
         int wrongAnswer = 0;
+        //mark correct answer with green text color
         CheckBox q4_1 = findViewById(R.id.q4_1);
         q4_1.setTextColor(getResources().getColor(R.color.green));
+        //if checked, mark the wrong answer in red color and set wrongAnswer to 1
         CheckBox q4_2 = findViewById(R.id.q4_2);
         if (q4_2.isChecked()) {
             q4_2.setTextColor(getResources().getColor(R.color.red));
             wrongAnswer = 1;
         }
+        //mark correct answer with green text color
         CheckBox q4_3 = findViewById(R.id.q4_3);
         q4_3.setTextColor(getResources().getColor(R.color.green));
+        //if checked, mark the wrong answer in red color and set wrongAnswer to 1
         CheckBox q4_4 = findViewById(R.id.q4_4);
         if (q4_4.isChecked()) {
             q4_4.setTextColor(getResources().getColor(R.color.red));
             wrongAnswer = 1;
         }
+        //if checked, mark the wrong answer in red color and set wrongAnswer to 1
         CheckBox q4_5 = findViewById(R.id.q4_5);
         if (q4_5.isChecked()) {
             q4_5.setTextColor(getResources().getColor(R.color.red));
             wrongAnswer = 1;
         }
+        //if checked, mark the wrong answer in red color and set wrongAnswer to 1
         CheckBox q4_6 = findViewById(R.id.q4_6);
         if (q4_6.isChecked()) {
             q4_6.setTextColor(getResources().getColor(R.color.red));
             wrongAnswer = 1;
         }
+        //mark correct answer with green text color
         CheckBox q4_7 = findViewById(R.id.q4_7);
         q4_7.setTextColor(getResources().getColor(R.color.green));
+        //mark correct answer with green text color
         CheckBox q4_8 = findViewById(R.id.q4_8);
         q4_8.setTextColor(getResources().getColor(R.color.green));
-
+        // if all the correct answers are checked and there was not selected any wrong answer => add 1 point
         if (q4_1.isChecked() && q4_3.isChecked() && q4_7.isChecked() && q4_8.isChecked() && wrongAnswer == 0)
             answer_count++;
 
@@ -136,33 +154,40 @@ public class MainActivity extends AppCompatActivity {
 
         //check if answer for Q8 is correct
         wrongAnswer = 0;
+        //mark correct answer with green background color
         CheckBox q8_1 = findViewById(R.id.q8_1);
         ImageView image8_1 = findViewById(R.id.image8_1);
         image8_1.setBackgroundColor(getResources().getColor(R.color.green));
+        //if checked, mark the wrong answer in red color and set wrongAnswer to 1
         CheckBox q8_2 = findViewById(R.id.q8_2);
         if (q8_2.isChecked()) {
             ImageView image8_2 = findViewById(R.id.image8_2);
             image8_2.setBackgroundColor(getResources().getColor(R.color.red));
             wrongAnswer = 1;
         }
+        //if checked, mark the wrong answer in red color and set wrongAnswer to 1
         CheckBox q8_3 = findViewById(R.id.q8_3);
         if (q8_3.isChecked()) {
             ImageView image8_3 = findViewById(R.id.image8_3);
             image8_3.setBackgroundColor(getResources().getColor(R.color.red));
             wrongAnswer = 1;
         }
+        //mark correct answer with green background color
         CheckBox q8_4 = findViewById(R.id.q8_4);
         ImageView image8_4 = findViewById(R.id.image8_4);
         image8_4.setBackgroundColor(getResources().getColor(R.color.green));
+        //if checked, mark the wrong answer in red color and set wrongAnswer to 1
         CheckBox q8_5 = findViewById(R.id.q8_5);
         if (q8_5.isChecked()) {
             ImageView image8_5 = findViewById(R.id.image8_5);
             image8_5.setBackgroundColor(getResources().getColor(R.color.red));
             wrongAnswer = 1;
         }
+        //mark correct answer with green background color
         CheckBox q8_6 = findViewById(R.id.q8_6);
         ImageView image8_6 = findViewById(R.id.image8_6);
         image8_6.setBackgroundColor(getResources().getColor(R.color.green));
+        // if all the correct answers are checked and there was not selected any wrong answer => add 1 point
         if (q8_1.isChecked() && q8_4.isChecked() && q8_6.isChecked() && wrongAnswer == 0)
             answer_count++;
 
@@ -178,5 +203,4 @@ public class MainActivity extends AppCompatActivity {
         //display Toast message with the result of the quiz (number of correct answers and if the test was successful or not)
         displayToastResult();
     }
-
 }
