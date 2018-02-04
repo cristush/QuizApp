@@ -45,4 +45,6 @@
     <string name="not_passed">Din păcate nu ați trecut testul (mai puțin de 6 răspunsuri corecte) !</string>
     <string name="continent">Europa</string>
     <string name="answer">"Răspuns: "</string>
+    <string name="multiple_answers">întrebări</string>
+    <string name="single_answer">întrebare</string>
 </resources>
